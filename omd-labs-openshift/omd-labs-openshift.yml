@@ -118,22 +118,8 @@ objects:
             protocol: TCP
           securityContext:
             anyuid: true
-          volumeMounts:
-          - mountPath: "/omd/sites/${SITE}/var.mount"
-            name: omd-var
-          - mountPath: "/omd/sites/${SITE}/etc.mount"
-            name: omd-etc
-          - mountPath: "/omd/sites/${SITE}/local.mount"
-            name: omd-local
         serviceAccountName: ${SA}
         terminationGracePeriodSeconds: 60
-        volumes:
-        - emptyDir: {}
-          name: omd-var
-        - emptyDir: {}
-          name: omd-etc
-        - emptyDir: {}
-          name: omd-local
     triggers:
     - imageChangeParams:
         automatic: true

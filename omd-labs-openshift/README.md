@@ -27,3 +27,22 @@ oc adm policy add-scc-to-user anyuid -z  system:serviceaccount:omd:default
 ```
 oc process omd -p NAME=foobar -p FLAVOR=ubuntu -p HOSTNAME=foobar.example.com | oc create -f  -
 ```
+
+## persistent storage
+
+### pvc template
+a template for the PVC is provided
+```
+oc create -f omd-labs-openshift-pvc.yml
+oc process omd-labs-pvc -p ACCESS_MODE=ReadWriteMany | oc create -f  -
+```
+
+attach claims to DV as volumes 
+for default site "openshift"
+```
+for pvc in etc local var ;  do oc volume dc/omd-centos --add \
+--mount-path=/omd/sites/openshift/${pvc}.mount --name=omd-${pvc} \
+-t pvc --claim-name=omd-${pvc} ; done
+oc volume dc/omd-centos --add --mount-path=/root/ansible_dropin \
+--name=omd-ansible -t pvc --claim-name=omd-ansible
+```

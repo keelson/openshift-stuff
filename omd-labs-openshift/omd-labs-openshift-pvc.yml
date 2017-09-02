@@ -1,0 +1,71 @@
+apiVersion: v1
+kind: Template
+metadata:
+  creationTimestamp: null
+  name: omd-labs-pvc
+objects:
+- apiVersion: v1
+  kind: PersistentVolumeClaim
+  metadata:
+    annotations:
+    creationTimestamp: null
+    name: omd-etc
+  spec:
+    accessModes:
+    - ${ACCESS_MODE}
+    resources:
+      requests:
+        storage: ${ETC_SIZE} 
+- apiVersion: v1
+  kind: PersistentVolumeClaim
+  metadata:
+    annotations:
+    creationTimestamp: null
+    name: omd-var
+  spec:
+    accessModes:
+    - ${ACCESS_MODE}
+    resources:
+      requests:
+        storage: ${VAR_SIZE} 
+- apiVersion: v1
+  kind: PersistentVolumeClaim
+  metadata:
+    annotations:
+    creationTimestamp: null
+    name: omd-local
+  spec:
+    accessModes:
+    - ${ACCESS_MODE}
+    resources:
+      requests:
+        storage: ${LOCAL_SIZE} 
+- apiVersion: v1
+  kind: PersistentVolumeClaim
+  metadata:
+    annotations:
+    creationTimestamp: null
+    name: omd-ansible
+  spec:
+    accessModes:
+    - ${ACCESS_MODE}
+    resources:
+      requests:
+        storage: ${ANSIBLE_SIZE} 
+parameters:
+- description: accessmode 
+  name: ACCESS_MODE 
+  value: ReadWriteOnce
+- description: size of etc mount
+  name: ETC_SIZE
+  value: 1Gi
+- description: size of var mount
+  name: VAR_SIZE
+  value: 1Gi
+- description: size of local mount
+  name: LOCAL_SIZE
+  value: 1Gi
+- description: size of ansible mount
+  name: ANSIBLE_SIZE
+  value: 1Gi
+  required: false
