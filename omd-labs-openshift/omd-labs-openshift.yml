@@ -1,0 +1,149 @@
+apiVersion: v1
+kind: Template
+labels:
+  template: omd
+metadata:
+  annotations:
+    description: omd labs openshift objects
+  creationTimestamp: null
+  name: omd
+objects:
+- apiVersion: v1
+  kind: ImageStream
+  metadata:
+    labels:
+      application: ${NAME}-${FLAVOR}
+    name: ${NAME}-${FLAVOR}
+- apiVersion: v1
+  kind: BuildConfig
+  metadata:
+    labels:
+      application: ${NAME}-${FLAVOR}
+    name: ${NAME}-${FLAVOR}
+  spec:
+    output:
+      to:
+        kind: ImageStreamTag
+        name: ${NAME}-${FLAVOR}:latest
+    source:
+      git:
+        ref: ${SRC_REPO_REF}
+        uri: ${SRC_REPO}
+      type: Git
+    strategy:
+      dockerStrategy:
+        dockerfilePath: Dockerfile.omd-labs-${FLAVOR}
+      type: Docker
+    triggers:
+    - imageChange: null
+      type: ImageChange
+    - type: ConfigChange
+- apiVersion: v1
+  kind: Service
+  metadata:
+    annotations:
+      description: https port
+    labels:
+      application: ${NAME}-${FLAVOR}
+    name: ${NAME}-${FLAVOR}
+  spec:
+    ports:
+    - name: http
+      port: 80
+      targetPort: 80
+    - name: https
+      port: 443
+      targetPort: 443
+    selector:
+      deploymentConfig: ${NAME}-${FLAVOR}
+- apiVersion: v1
+  id: ${NAME}-${FLAVOR}-https
+  kind: Route
+  metadata:
+    annotations: null
+    labels:
+      application: ${NAME}-${FLAVOR}
+    name: ${NAME}-${FLAVOR}
+  spec:
+    host: ${HOSTNAME}
+    port:
+      targetPort: https
+    tls:
+      termination: passthrough
+    to:
+      kind: Service
+      name: ${NAME}-${FLAVOR}
+    wildcardPolicy: None
+- apiVersion: v1
+  kind: DeploymentConfig
+  metadata:
+    labels:
+      application: ${NAME}-${FLAVOR}
+    name: ${NAME}-${FLAVOR}
+  spec:
+    replicas: 1
+    selector:
+      deploymentConfig: ${NAME}-${FLAVOR}
+    strategy:
+      type: Recreate
+    template:
+      metadata:
+        labels:
+          application: ${NAME}-${FLAVOR}
+          deploymentConfig: ${NAME}-${FLAVOR}
+        name: ${NAME}-${FLAVOR}
+      spec:
+        containers:
+        - image: ${NAME}-${FLAVOR}
+          imagePullPolicy: Always
+          name: ${NAME}-${FLAVOR}
+          ports:
+          - containerPort: 443
+            name: https
+            protocol: TCP
+          - containerPort: 80
+            name: http
+            protocol: TCP
+          - containerPort: 22
+            name: ssh
+            protocol: TCP
+          - containerPort: 4730
+            name: gearmand
+            protocol: TCP
+          - containerPort: 5666
+            name: nrpe
+            protocol: TCP
+          securityContext:
+            anyuid: true
+        serviceAccountName: ${SA}
+        terminationGracePeriodSeconds: 60
+    triggers:
+    - imageChangeParams:
+        automatic: true
+        containerNames:
+        - ${NAME}-${FLAVOR}
+        from:
+          kind: ImageStream
+          name: ${NAME}-${FLAVOR}
+      type: ImageChange
+    - type: ConfigChange
+parameters:
+- description: name of application
+  name: NAME
+  required: true
+  value: omd-${FLAVOR}
+- description: hostname for public route
+  name: HOSTNAME
+- description: git repo
+  name: SRC_REPO
+  required: true
+  value: https://github.com/ConSol/omd-labs-docker.git
+- description: git branch
+  name: SRC_REPO_REF
+  value: master
+- description: 'flavor (distribution) to build: centos, debian or ubuntu'
+  name: FLAVOR
+  value: centos
+- description: service account, needs anyuid (root) scc
+  name: SA
+  value: default
