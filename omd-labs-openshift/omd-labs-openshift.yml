@@ -33,6 +33,9 @@ objects:
     strategy:
       dockerStrategy:
         dockerfilePath: Dockerfile.omd-labs-${FLAVOR}
+        env:
+          - name: SITENAME
+            value: "${SITE}"
       type: Docker
     triggers:
     - imageChange: null
@@ -115,8 +118,22 @@ objects:
             protocol: TCP
           securityContext:
             anyuid: true
+          volumeMounts:
+          - mountPath: "/omd/sites/${SITE}/var.mount"
+            name: omd-var
+          - mountPath: "/omd/sites/${SITE}/etc.mount"
+            name: omd-etc
+          - mountPath: "/omd/sites/${SITE}/local.mount"
+            name: omd-local
         serviceAccountName: ${SA}
         terminationGracePeriodSeconds: 60
+        volumes:
+        - emptyDir: {}
+          name: omd-var
+        - emptyDir: {}
+          name: omd-etc
+        - emptyDir: {}
+          name: omd-local
     triggers:
     - imageChangeParams:
         automatic: true
@@ -147,3 +164,6 @@ parameters:
 - description: service account, needs anyuid (root) scc
   name: SA
   value: default
+- description: omd site name (default openshift)
+  name: SITE
+  value: openshift

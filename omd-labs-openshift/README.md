@@ -16,6 +16,13 @@ oc create -f omd-labs-openshift.yml
 oc process omd  --parameters
 ```
 
+#### configure serviceaccount
+the default serviceaccount of the project is used if no other sa is specified.
+before processing the template add the scc to this account
+```
+oc adm policy add-scc-to-user anyuid -z  system:serviceaccount:omd:default
+```
+
 #### process the template
 ```
 oc process omd -p NAME=foobar -p FLAVOR=ubuntu -p HOSTNAME=foobar.example.com | oc create -f  -
