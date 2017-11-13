@@ -7,4 +7,4 @@ RUN yum install -y epel-release && \
     rm -rf /var/cache/yum
 COPY run.sh /usr/bin/run.sh
 USER 1001
-CMD ['/usr/bin/run.sh']
+CMD ["sh", "run.sh"]
