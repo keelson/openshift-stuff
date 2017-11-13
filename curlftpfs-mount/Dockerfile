@@ -9,5 +9,4 @@ COPY run.sh /usr/bin/run.sh
 RUN mkdir /storage && \
     chown 1001:0 /storage && \
     chmod 775 /storage
-USER 1001
 CMD ["sh", "run.sh"]
