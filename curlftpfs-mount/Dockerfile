@@ -1,6 +1,6 @@
 FROM centos:7
 
-RUN yum install epel-release && \
+RUN yum install -y epel-release && \
     INSTALL_PKGS="curlftpfs" && \
     yum install -y $INSTALL_PKGS && \
     yum clean all && \
