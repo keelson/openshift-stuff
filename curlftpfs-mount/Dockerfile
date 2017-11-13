@@ -5,6 +5,6 @@ RUN yum install -y epel-release && \
     yum install -y $INSTALL_PKGS && \
     yum clean all && \
     rm -rf /var/cache/yum
-COPY run.sh /tmp/run.sh
+COPY run.sh /usr/bin/run.sh
 USER 1001
-CMD ['/tmp/run.sh']
+CMD ['/usr/bin/run.sh']
