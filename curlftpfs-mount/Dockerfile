@@ -5,7 +5,6 @@ RUN yum install -y epel-release && \
     yum install -y $INSTALL_PKGS && \
     yum clean all && \
     rm -rf /var/cache/yum
-
-RUN curlftpfs ftp://ftp.sunet.se/ /mnt
+COPY run.sh /tmp
 USER 1001
-CMD ['ls -l /mnt']
+CMD ['/tmp/run.sh']
