@@ -1,8 +1,5 @@
 FROM centos:7
 
-ENV S3_BUCKET
-ENV S3_USER
-ENV S3_PASSWORD
 ENV MOUNTPOINT=/storage
 
 RUN yum install -y epel-release && \
