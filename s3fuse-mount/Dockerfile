@@ -17,8 +17,14 @@ RUN mkdir /tmp/build && \
     make && \
     make install
 
+RUN adduser -d ${HOME} -m -g 0 -u 1001 mount-user                               
+
 COPY run.sh /usr/bin/run.sh
+
 RUN mkdir ${MOUNTPOINT} && \
     chown 1001:0 ${MOUNTPOINT} && \
     chmod 775 ${MOUNTPOINT}
+
+USER 1001
+
 CMD ["sh", "run.sh"]
