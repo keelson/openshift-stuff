@@ -41,18 +41,23 @@ spec:
         terminationMessagePath: /dev/termination-log
         terminationMessagePolicy: File
         env:
-        - name: S3_USER
+        - name: AWSACCESSKEYID
           valueFrom:
             secretKeyRef:
               name: s3-bucket
               key: S3_USER
-        - name: S3_PASSWORD
+        - name: AWSSECRETACCESSKEY
           valueFrom:
             secretKeyRef:
               name: s3-bucket
               key: S3_PASSWORD
         - name: S3_BUCKET
-          required: yes
+          valueFrom:
+            secretKeyRef:
+              name: s3-bucket
+              key: S3_BUCKET
+        - name: DEBUG
+          value: "true"
       dnsPolicy: ClusterFirst
       restartPolicy: Always
       schedulerName: default-scheduler
