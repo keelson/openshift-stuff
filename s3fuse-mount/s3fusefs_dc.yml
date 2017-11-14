@@ -46,11 +46,11 @@ spec:
             secretKeyRef:
               name: s3-bucket
               key: S3_USER
-        - name: S3_PASS
+        - name: S3_PASSWORD
           valueFrom:
             secretKeyRef:
               name: s3-bucket
-              key: S3_PASS
+              key: S3_PASSWORD
         - name: S3_BUCKET
           required: yes
       dnsPolicy: ClusterFirst

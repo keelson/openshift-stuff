@@ -18,7 +18,7 @@ RUN mkdir /tmp/build && \
     make install
 
 COPY run.sh /usr/bin/run.sh
-RUN mkdir /storage && \
-    chown 1001:0 /storage && \
-    chmod 775 /storage
+RUN mkdir ${MOUNTPOINT} && \
+    chown 1001:0 ${MOUNTPOINT} && \
+    chmod 775 ${MOUNTPOINT}
 CMD ["sh", "run.sh"]
