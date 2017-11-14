@@ -1,0 +1,36 @@
+apiVersion: v1
+kind: BuildConfig
+metadata:
+  creationTimestamp: null
+  labels:
+    app: curlftpfs
+  name: curlftpfs
+spec:
+  failedBuildsHistoryLimit: 5
+  nodeSelector: null
+  output:
+    to:
+      kind: ImageStreamTag
+      name: curlftpfs:latest
+  postCommit: {}
+  resources: {}
+  runPolicy: Serial
+  source:
+    contextDir: curlftpfs-mount
+    git:
+      uri: https://github.com/keelson/openshift-stuff.git
+    type: Git
+  strategy:
+    dockerStrategy:
+      from:
+        kind: ImageStreamTag
+        name: centos:7
+        namespace: fuse-mount
+    type: Docker
+  successfulBuildsHistoryLimit: 5
+  triggers:
+  - type: ConfigChange
+  - imageChange: {}
+    type: ImageChange
+status:
+  lastVersion: 0

@@ -1,0 +1,23 @@
+apiVersion: v1
+kind: ImageStream
+metadata:
+  creationTimestamp: null
+  generation: 1
+  labels:
+    app: curlftpfs
+  name: curlftpfs
+spec:
+  lookupPolicy:
+    local: false
+  tags:
+  - annotations: null
+    from:
+      kind: DockerImage
+      name: 172.30.151.247:5000/fuse-test/curlftpfs:latest
+    generation: null
+    importPolicy: {}
+    name: latest
+    referencePolicy:
+      type: ""
+status:
+  dockerImageRepository: ""
