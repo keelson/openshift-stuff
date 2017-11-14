@@ -16,7 +16,7 @@ spec:
   resources: {}
   runPolicy: Serial
   source:
-    contextDir: s3fusefs-mount
+    contextDir: s3fuse-mount
     git:
       uri: https://github.com/keelson/openshift-stuff.git
     type: Git

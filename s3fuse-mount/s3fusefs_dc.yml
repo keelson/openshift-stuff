@@ -40,6 +40,19 @@ spec:
           privileged: true
         terminationMessagePath: /dev/termination-log
         terminationMessagePolicy: File
+        env:
+        - name: S3_USER
+          valueFrom:
+            secretKeyRef:
+              name: s3-bucket
+              key: S3_USER
+        - name: S3_PASS
+          valueFrom:
+            secretKeyRef:
+              name: s3-bucket
+              key: S3_PASS
+        - name: S3_BUCKET
+          required: yes
       dnsPolicy: ClusterFirst
       restartPolicy: Always
       schedulerName: default-scheduler

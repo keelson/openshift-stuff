@@ -1,5 +1,10 @@
 FROM centos:7
 
+ENV S3_BUCKET
+ENV S3_USER
+ENV S3_PASSWORD
+ENV MOUNTPOINT=/storage
+
 RUN yum install -y epel-release && \
     INSTALL_PKGS="automake fuse fuse-devel gcc-c++ git libcurl-devel libxml2-devel make openssl-devel" && \
     yum install -y $INSTALL_PKGS && \
