@@ -29,7 +29,7 @@ spec:
         deploymentconfig: s3fusefs
     spec:
       containers:
-      - image: 172.30.151.247:5000/fuse-test/s3fusefs@sha256:f2cc5d0fa07dec45f319f3e90cd89258c37774cb2dde44fea5c474ad8d2e20e1
+      - image: docker-registry.default.svc.cluster.local:5000/fuse-test/s3fusefs@latest
         imagePullPolicy: Always
         name: s3fusefs
         resources: {}
