@@ -13,7 +13,7 @@ spec:
   - annotations: null
     from:
       kind: DockerImage
-      name: 172.30.151.247:5000/fuse-test/curlftpfs:latest
+      name: 172.30.151.247:5000/fuse-mount/curlftpfs:latest
     generation: null
     importPolicy: {}
     name: latest

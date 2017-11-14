@@ -29,7 +29,7 @@ spec:
         deploymentconfig: curlftpfs
     spec:
       containers:
-      - image: docker-registry.default.svc.cluster.local:5000/fuse-test/curlftpfs@latest
+      - image: docker-registry.default.svc.cluster.local:5000/fuse-mount/curlftpfs@latest
         imagePullPolicy: Always
         name: curlftpfs
         resources: {}
