@@ -13,3 +13,7 @@ echo "######################################"
   s3fs ${S3_BUCKET} ${MOUNTPOINT} -d -d -f -o f2 -o curldbg
 fi
 ls -l ${MOUNTPOINT}
+echo 'sleeping forever..."
+while true; do
+  sleep 1
+done
