@@ -4,13 +4,13 @@ metadata:
   creationTimestamp: null
   generation: 1
   labels:
-    app: curlftpfs
-  name: curlftpfs
+    app: s3fusefs
+  name: s3fusefs
 spec:
   replicas: 1
   selector:
-    app: curlftpfs
-    deploymentconfig: curlftpfs
+    app: s3fusefs
+    deploymentconfig: s3fusefs
   strategy:
     activeDeadlineSeconds: 21600
     resources: {}
@@ -25,13 +25,13 @@ spec:
     metadata:
       creationTimestamp: null
       labels:
-        app: curlftpfs
-        deploymentconfig: curlftpfs
+        app: s3fusefs
+        deploymentconfig: s3fusefs
     spec:
       containers:
-      - image: docker-registry.default.svc.cluster.local:5000/fuse-test/curlftpfs@latest
+      - image: 172.30.151.247:5000/fuse-test/s3fusefs@sha256:f2cc5d0fa07dec45f319f3e90cd89258c37774cb2dde44fea5c474ad8d2e20e1
         imagePullPolicy: Always
-        name: curlftpfs
+        name: s3fusefs
         resources: {}
         securityContext:
           capabilities:
@@ -53,11 +53,11 @@ spec:
   - imageChangeParams:
       automatic: true
       containerNames:
-      - curlftpfs
+      - s3fusefs
       from:
         kind: ImageStreamTag
-        name: curlftpfs:latest
-        namespace: fuse-mount
+        name: s3fusefs:latest
+        namespace: fuse-test
     type: ImageChange
 status:
   availableReplicas: 0
