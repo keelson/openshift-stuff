@@ -29,7 +29,7 @@ spec:
         deploymentconfig: s3fusefs
     spec:
       containers:
-      - image: docker-registry.default.svc.cluster.local:5000/fuse-test/s3fusefs@latest
+      - image: docker-registry.default.svc.cluster.local:5000/fuse-mount/s3fusefs@latest
         imagePullPolicy: Always
         name: s3fusefs
         resources: {}
@@ -57,7 +57,7 @@ spec:
       from:
         kind: ImageStreamTag
         name: s3fusefs:latest
-        namespace: fuse-test
+        namespace: fuse-mount
     type: ImageChange
 status:
   availableReplicas: 0
