@@ -17,6 +17,5 @@ RUN mkdir ${MOUNTPOINT} && \
     chmod 775 ${MOUNTPOINT}
 
 USER 1001
-:q!
 
 CMD ["sh", "run.sh"]
